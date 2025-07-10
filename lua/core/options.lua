@@ -1,21 +1,21 @@
 vim.o.nu = true
-vim.o.relativenumber = true 
+vim.o.relativenumber = true
 
 -- vim.o.clipboard = 'unnamedplus'
 
-vim.o.wrap = false 
-vim.o.linebreak = true 
+vim.o.wrap = false
+vim.o.linebreak = true
 vim.o.autoindent = true
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4 
-vim.o.softtabstop = 4 
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
 vim.o.expandtab = true
 
-vim.o.swapfile = false 
+vim.o.swapfile = false
 vim.o.backup = false
 vim.o.smartindent = true
 
@@ -65,4 +65,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
 	vim.highlight.on_yank({ timeout = 300 })
 	end,
+})
+
+-- format on write 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    if #clients > 0 then
+      vim.lsp.buf.format({
+        async = false,
+        timeout_ms = 2000,
+      })
+    end
+  end,
 })
