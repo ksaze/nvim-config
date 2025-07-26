@@ -20,12 +20,7 @@ vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 
 -- For clearing highlights after search
-vim.keymap.set("n", "<C-c>", ":nohl<CR>", { silent = true })
--- Global search and replace
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
--- For copying to system clipboard
-vim.keymap.set('', '<C-S-c>', '"+y', { desc = 'Copy to system clipboard' })
+-- vim.keymap.set("n", "<C-c>", ":nohl<CR>", { silent = true })
 
 -- Copy filepath to the clipboard
 vim.keymap.set("n", "<leader>fp", function()

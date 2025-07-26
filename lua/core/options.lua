@@ -45,7 +45,7 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 4
 
 -- Automatically change the working directory to the current file's directory
-vim.api.nvim_create_autocmd({"BufEnter", "BufReadPost"}, {
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
   callback = function()
     vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
   end,
@@ -53,21 +53,21 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufReadPost"}, {
 
 -- disable automatic comment on newline
 vim.api.nvim_create_autocmd("FileType", {
-		pattern = "*",
-		callback = function()
-		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-		end,
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
 })
 
 -- highlight text on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-	pattern = "*",
-	callback = function()
-	vim.highlight.on_yank({ timeout = 300 })
-	end,
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ timeout = 300 })
+  end,
 })
 
--- format on write 
+-- format on write
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function()
