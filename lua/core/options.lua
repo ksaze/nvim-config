@@ -44,13 +44,6 @@ vim.g.netrw_sizestyle = "H"
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 4
 
--- Automatically change the working directory to the current file's directory
-vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
-  callback = function()
-    vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
-  end,
-})
-
 -- disable automatic comment on newline
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",

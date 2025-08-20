@@ -43,9 +43,10 @@ return {
         "rust_analyzer",
         "ruff",
         "clangd",
+        "ocamllsp",
       },
       handlers = {
-        function(server_name)         -- default handler (optional)
+        function(server_name) -- default handler (optional)
           require("lspconfig")[server_name].setup {
             capabilities = capabilities
           }
@@ -76,6 +77,19 @@ return {
             capabilities = capabilities,
             root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git") or vim.loop.cwd,
           }
+        end,
+
+        ["ocamllsp"] = function()
+          local lspconfig = require("lspconfig")
+          lspconfig.ocamllsp.setup {
+            capabilities = capabilities,
+            root_dir = lspconfig.util.root_pattern("*.opam", "dune-project", "dune", ".git") or vim.loop.cwd,
+            filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "reason" },
+            settings = {
+              codelens = { enable = true },
+              inlayHints = { enable = true }
+            }
+          }
         end
 
       }
@@ -94,13 +108,13 @@ return {
 
     -- Keymaps for diagnostics
     local opts = { noremap = true, silent = true }
-    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, opts)     -- Show diagnostics for current line
+    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, opts) -- Show diagnostics for current line
     -- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- Next diagnostic
     -- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- Previous diagnostic
-    vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts)     -- Populate location list with diagnostics
+    vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts) -- Populate location list with diagnostics
     vim.keymap.set("n", "<leader>lt", function()
       local config = vim.diagnostic.config()
-      vim.diagnostic.config({ signs = not config.signs })       -- Toggle diagnostic signs
-    end, opts)                                                  -- Toggle diagnostic signs (e.g., W, E)
+      vim.diagnostic.config({ signs = not config.signs }) -- Toggle diagnostic signs
+    end, opts)                                            -- Toggle diagnostic signs (e.g., W, E)
   end
 }
